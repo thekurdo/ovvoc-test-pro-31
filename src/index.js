@@ -34,9 +34,9 @@ app.post('/auth/token', ensureAuth, (req, res) => {
   res.json({ token });
 });
 
-// Logout — req.logout() without callback (BREAKS in Passport 0.7)
+// Logout — req.logout(function(err) { if (err) { return next(err); } }); without callback (BREAKS in Passport 0.7)
 app.post('/auth/logout', (req, res) => {
-  req.logout();
+  req.logout(function(err) { if (err) { return next(err); } });
   res.json({ message: 'Logged out' });
 });
 
